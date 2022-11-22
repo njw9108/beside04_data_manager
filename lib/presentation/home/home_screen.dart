@@ -26,33 +26,10 @@ class HomeScreen extends GetView<HomeViewModel> {
                     width: 1100,
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(32.0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    '새로고침',
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 40,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    '저장',
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
                             ...state.value.emoticons
                                 .map(
                                   (e) => Padding(
@@ -72,6 +49,13 @@ class HomeScreen extends GetView<HomeViewModel> {
                                             ),
                                             Text(
                                               e.description.join(', '),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                              child: ElevatedButton(
+                                                onPressed: () {},
+                                                child: const Text('저장'),
+                                              ),
                                             ),
                                           ],
                                         ),
