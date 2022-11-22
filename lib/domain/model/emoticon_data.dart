@@ -7,9 +7,10 @@ part 'emoticon_data.g.dart';
 
 @freezed
 class EmoticonData with _$EmoticonData {
-  factory EmoticonData(
-      {@Default('') String emoticon,
-      @Default('') String description}) = _EmoticonData;
+  factory EmoticonData({
+    required String emoticon,
+    required String description,
+  }) = _EmoticonData;
 
   factory EmoticonData.fromJson(Map<String, dynamic> json) =>
       _$EmoticonDataFromJson(json);
