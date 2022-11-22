@@ -16,9 +16,15 @@ class HomeViewModel extends GetxController {
   Rx<HomeState> get state => _state;
 
   Future<void> fetchData() async {
+    _state.value = state.value.copyWith(
+      isLoading: true,
+    );
+
     final result = await getEmoticonUseCase();
+    print(result);
     _state.value = state.value.copyWith(
       emoticons: result,
+      isLoading: false,
     );
   }
 }

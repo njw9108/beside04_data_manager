@@ -10,6 +10,7 @@ part 'home_state.g.dart';
 class HomeState with _$HomeState {
   factory HomeState({
     @Default([]) List<EmoticonData> emoticons,
+    @Default(false) isLoading,
   }) = _HomeState;
 
   factory HomeState.fromJson(Map<String, dynamic> json) =>
