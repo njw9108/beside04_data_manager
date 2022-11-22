@@ -9,7 +9,7 @@ part 'emoticon_data.g.dart';
 class EmoticonData with _$EmoticonData {
   factory EmoticonData({
     required String emoticon,
-    required String description,
+    required List<String> description,
   }) = _EmoticonData;
 
   factory EmoticonData.fromJson(Map<String, dynamic> json) =>
