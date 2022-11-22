@@ -36,7 +36,6 @@ class HomeViewModel extends GetxController {
     );
 
     final result = await getEmoticonUseCase();
-    print(result);
     _state.value = state.value.copyWith(
       emoticons: result,
       isLoading: false,
