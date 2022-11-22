@@ -1,3 +1,5 @@
+import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
+
 abstract class EmoticonRepository {
-  Future<void> getEmoticon();
+  Future<List<EmoticonData>> getEmoticon();
 }
