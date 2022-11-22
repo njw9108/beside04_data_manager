@@ -1,7 +1,7 @@
 import 'package:beside04_data_manager/domain/model/wise_saying_data.dart';
 
 class WiseSayingDataSource {
-  Future<List<WiseSayingData>> getEmoticons() async {
+  Future<List<WiseSayingData>> getWiseSayings() async {
     return wiseSayings;
   }
 }
