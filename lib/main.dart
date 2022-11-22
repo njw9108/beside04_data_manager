@@ -1,4 +1,3 @@
-import 'package:beside04_data_manager/di/getx_binding.dart';
 import 'package:beside04_data_manager/presentation/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialBinding: BindingsBuilder(getHomeBinding),
       home: const HomeScreen(),
     );
   }
