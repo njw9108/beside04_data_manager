@@ -81,7 +81,9 @@ class HomeScreen extends GetView<HomeViewModel> {
                                           children: [
                                             ElevatedButton(
                                               onPressed: () {
-                                                controller.menu.showMenu();
+                                                controller.menu.showMenu(
+                                                  state.value.wiseSayings,
+                                                );
                                               },
                                               child: const Text('명언 선택'),
                                             ),

@@ -2,11 +2,11 @@ import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 
 class EmoticonDataSource {
   Future<List<EmoticonData>> getEmoticons() async {
-    return emoticons;
+    return _emoticons;
   }
 }
 
-List<EmoticonData> emoticons = [
+List<EmoticonData> _emoticons = [
   EmoticonData(
     emoticon: 'assets/disappoint.png',
     description: ['실망', '우울'],

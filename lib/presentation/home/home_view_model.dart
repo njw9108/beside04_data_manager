@@ -1,4 +1,5 @@
 import 'package:beside04_data_manager/domain/use_case/get_emoticon_use_case.dart';
+import 'package:beside04_data_manager/domain/use_case/get_wise_saying_use_case.dart';
 import 'package:beside04_data_manager/presentation/home/components/overlay_menu.dart';
 import 'package:beside04_data_manager/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,12 @@ import 'package:get/get.dart';
 
 class HomeViewModel extends GetxController {
   final GetEmoticonUseCase getEmoticonUseCase;
+  final GetWiseSayingUseCase getWiseSayingUseCase;
   final BuildContext context;
 
   HomeViewModel({
     required this.getEmoticonUseCase,
+    required this.getWiseSayingUseCase,
     required this.context,
   }) {
     fetchData();
@@ -35,9 +38,12 @@ class HomeViewModel extends GetxController {
       isLoading: true,
     );
 
-    final result = await getEmoticonUseCase();
+    final wiseSayings = await getWiseSayingUseCase();
+
+    final emoticons = await getEmoticonUseCase();
     _state.value = state.value.copyWith(
-      emoticons: result,
+      emoticons: emoticons,
+      wiseSayings: wiseSayings,
       isLoading: false,
     );
   }
