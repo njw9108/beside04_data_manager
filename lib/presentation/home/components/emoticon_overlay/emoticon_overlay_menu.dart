@@ -2,7 +2,6 @@ import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:beside04_data_manager/presentation/home/components/emoticon_overlay/emoticon_select_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
 class EmoticonOverlayMenu {
   late BuildContext context;

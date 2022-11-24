@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:beside04_data_manager/domain/model/emoticon_words_data.dart';
 import 'package:beside04_data_manager/domain/model/matching_data.dart';
 import 'package:beside04_data_manager/domain/use_case/get_emoticon_use_case.dart';
 import 'package:beside04_data_manager/domain/use_case/get_matching_list_use_case.dart';
 import 'package:beside04_data_manager/presentation/home/components/emoticon_overlay/emoticon_overlay_menu.dart';
+import 'package:beside04_data_manager/presentation/home/components/word_adding/word_adding_overlay_menu.dart';
 import 'package:beside04_data_manager/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,9 +27,14 @@ class HomeViewModel extends GetxController {
 
   EmoticonOverlayMenu get emoticonMenu => _emoticonMenu;
 
+  final WordAddingOverlayMenu _wordMenu = WordAddingOverlayMenu();
+
+  WordAddingOverlayMenu get wordMenu => _wordMenu;
+
   @override
   void onInit() {
     _emoticonMenu.context = context;
+    _wordMenu.context = context;
 
     super.onInit();
   }
@@ -51,11 +58,68 @@ class HomeViewModel extends GetxController {
     );
   }
 
-  void setEmoticon(MatchingData data, String emoticon) {
-    final index = state.value.matchingList.indexOf(data);
+  void addEmoticonWords(MatchingData matchingData) {
+    final index = state.value.matchingList.indexOf(matchingData);
+    List<MatchingData> newMatchingDataList =
+        List.from(state.value.matchingList);
+
+    List<EmoticonWordsData> newEmoticonWordsList =
+        List.from(newMatchingDataList[index].emoticonWordsList);
+
+    newEmoticonWordsList.add(EmoticonWordsData());
+
+    newMatchingDataList[index] = newMatchingDataList[index].copyWith(
+      emoticonWordsList: newEmoticonWordsList,
+    );
+
+    _state.value = state.value.copyWith(
+      matchingList: newMatchingDataList,
+    );
+  }
+
+  void setEmoticon(MatchingData matchingData,
+      EmoticonWordsData emoticonWordsData, String emoticon) {
+    final matchingIndex = state.value.matchingList.indexOf(matchingData);
     List<MatchingData> newMatchingList = List.from(state.value.matchingList);
-    newMatchingList[index] = data.copyWith(
-      emoticon: emoticon,
+
+    final emoticonWordsIndex = newMatchingList[matchingIndex]
+        .emoticonWordsList
+        .indexOf(emoticonWordsData);
+    List<EmoticonWordsData> newEmoticonWordsList =
+        List.from(newMatchingList[matchingIndex].emoticonWordsList);
+
+    newEmoticonWordsList[emoticonWordsIndex] =
+        emoticonWordsData.copyWith(emoticon: emoticon);
+
+    newMatchingList[matchingIndex] = matchingData.copyWith(
+      emoticonWordsList: newEmoticonWordsList,
+    );
+    _state.value = state.value.copyWith(
+      matchingList: newMatchingList,
+    );
+  }
+
+  void addWords(MatchingData matchingData, EmoticonWordsData emoticonWordsData,
+      List<String> words) {
+    final matchingIndex = state.value.matchingList.indexOf(matchingData);
+    List<MatchingData> newMatchingList = List.from(state.value.matchingList);
+
+    final emoticonWordsIndex = newMatchingList[matchingIndex]
+        .emoticonWordsList
+        .indexOf(emoticonWordsData);
+    List<EmoticonWordsData> newEmoticonWordsList =
+        List.from(newMatchingList[matchingIndex].emoticonWordsList);
+
+    List<String> newWords =
+        List.from(newEmoticonWordsList[emoticonWordsIndex].words);
+
+    newWords.addAll(words);
+
+    newEmoticonWordsList[emoticonWordsIndex] =
+        emoticonWordsData.copyWith(words: newWords);
+
+    newMatchingList[matchingIndex] = matchingData.copyWith(
+      emoticonWordsList: newEmoticonWordsList,
     );
     _state.value = state.value.copyWith(
       matchingList: newMatchingList,

@@ -1,3 +1,4 @@
+import 'package:beside04_data_manager/domain/model/emoticon_words_data.dart';
 import 'package:beside04_data_manager/domain/model/matching_data.dart';
 
 class MatchingDataSource {
@@ -9,11 +10,19 @@ class MatchingDataSource {
 List<MatchingData> _matchList = [
   MatchingData(
     wiseSaying: '삶이 있는 한 희망은 있다',
-    emoticon: 'assets/disappoint.png',
+    emoticonWordsList: [
+      EmoticonWordsData(
+        emoticon: 'assets/mask.png',
+        words: ['삶', '희망'],
+      ),
+      EmoticonWordsData(
+        emoticon: 'assets/star.png',
+        words: ['재미', '신남'],
+      ),
+    ],
   ),
   MatchingData(
     wiseSaying: '산다는것 그것은 치열한 전투이다.',
-    emoticon: 'assets/mask.png',
   ),
   MatchingData(
     wiseSaying: '하루에 3시간을 걸으면 7년 후에 지구를 한바퀴 돌 수 있다.',
