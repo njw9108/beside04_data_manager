@@ -14,7 +14,7 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+  <base href="/data_manager/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
@@ -38,8 +38,41 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+
+  <style>
+      .container {
+        width: 100vw;
+        height: 100vh;
+        line-height:100vh;
+        align-items: center;
+        text-align:center;
+        vertical-align: middle;
+        margin: 0 auto;
+        display:table-cell;
+      }
+      .indicator2{
+        width: 80px;
+      }
+      .container img {
+        display:block;
+        margin:0 auto;
+      }
+    </style>
 </head>
-<body>
+<body style="overflow: hidden" bgcolor="#fff">
+<div id="loading_indicator" class="container">
+  <img class="indicator2"  src="./asset/loading.gif"/>
+</div>
+<script>
+      window.onload = function () {
+      setTimeout(function () {
+          var loadingIndicator = document.getElementById("loading_indicator");
+          if (loadingIndicator) {
+              loadingIndicator.remove();
+          }
+        }, 10000);
+      };
+</script>
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
