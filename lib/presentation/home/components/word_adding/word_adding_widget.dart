@@ -56,8 +56,10 @@ class _WordAddingWidgetState extends State<WordAddingWidget> {
                     ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            addedWords.add(controller.text);
-                            controller.text = '';
+                            if (controller.text.trim().isNotEmpty) {
+                              addedWords.add(controller.text.trim());
+                              controller.text = '';
+                            }
                           });
                         },
                         child: const Text('추가'))

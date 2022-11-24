@@ -125,4 +125,51 @@ class HomeViewModel extends GetxController {
       matchingList: newMatchingList,
     );
   }
+
+  void deleteWord(MatchingData matchingData,
+      EmoticonWordsData emoticonWordsData, int wordIndex) {
+    final matchingIndex = state.value.matchingList.indexOf(matchingData);
+    List<MatchingData> newMatchingList = List.from(state.value.matchingList);
+
+    final emoticonWordsIndex = newMatchingList[matchingIndex]
+        .emoticonWordsList
+        .indexOf(emoticonWordsData);
+
+    List<EmoticonWordsData> newEmoticonWordsList =
+        List.from(newMatchingList[matchingIndex].emoticonWordsList);
+
+    List<String> newWords =
+        List.from(newEmoticonWordsList[emoticonWordsIndex].words);
+
+    newWords.removeAt(wordIndex);
+
+    newEmoticonWordsList[emoticonWordsIndex] =
+        emoticonWordsData.copyWith(words: newWords);
+
+    newMatchingList[matchingIndex] = matchingData.copyWith(
+      emoticonWordsList: newEmoticonWordsList,
+    );
+    _state.value = state.value.copyWith(
+      matchingList: newMatchingList,
+    );
+  }
+
+  void deleteMatchingData(
+      MatchingData matchingData, EmoticonWordsData emoticonWords) {
+    final int matchingIndex = state.value.matchingList.indexOf(matchingData);
+    List<MatchingData> newMatchingList = List.from(state.value.matchingList);
+
+    List<EmoticonWordsData> newEmoticonWordsList =
+        List.from(newMatchingList[matchingIndex].emoticonWordsList);
+
+    newEmoticonWordsList.remove(emoticonWords);
+
+    newMatchingList[matchingIndex] = newMatchingList[matchingIndex].copyWith(
+      emoticonWordsList: newEmoticonWordsList,
+    );
+
+    _state.value = state.value.copyWith(
+      matchingList: newMatchingList,
+    );
+  }
 }

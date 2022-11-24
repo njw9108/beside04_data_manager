@@ -21,7 +21,33 @@ class HomeScreen extends GetView<HomeViewModel> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.limeAccent,
+          toolbarHeight: 75,
+          flexibleSpace: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(onPressed: () {}, child: const Text('이전')),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  const SizedBox(
+                    width: 100,
+                    child: TextField(),
+                  ),
+                  ElevatedButton(onPressed: () {}, child: const Text('이동')),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  ElevatedButton(onPressed: () {}, child: const Text('다음')),
+                ],
+              ),
+            ),
+          ),
+        ),
         body: Center(
           child: Obx(
             () => state.value.isLoading
@@ -34,6 +60,7 @@ class HomeScreen extends GetView<HomeViewModel> {
                         child: Obx(
                           () => Column(
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ...state.value.matchingList
                                   .map(
@@ -65,48 +92,66 @@ class HomeScreen extends GetView<HomeViewModel> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
-                                                    Container(
-                                                      width: 80,
-                                                      height: 80,
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8),
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        color:
-                                                            Colors.greenAccent,
-                                                      ),
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          controller
-                                                              .emoticonMenu
-                                                              .showMenu(
-                                                            state.value
-                                                                .emoticons,
-                                                            (emoticon) {
-                                                              controller.setEmoticon(
-                                                                  matchingData,
-                                                                  emoticonWordsData,
-                                                                  emoticon);
+                                                    Column(
+                                                      children: [
+                                                        Container(
+                                                          width: 80,
+                                                          height: 80,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8),
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            color: Colors
+                                                                .greenAccent,
+                                                          ),
+                                                          child: InkWell(
+                                                            onTap: () {
+                                                              controller
+                                                                  .emoticonMenu
+                                                                  .showMenu(
+                                                                state.value
+                                                                    .emoticons,
+                                                                (emoticon) {
+                                                                  controller.setEmoticon(
+                                                                      matchingData,
+                                                                      emoticonWordsData,
+                                                                      emoticon);
+                                                                },
+                                                              );
                                                             },
-                                                          );
-                                                        },
-                                                        child: emoticonWordsData
-                                                                .emoticon
-                                                                .isEmpty
-                                                            ? const Center(
-                                                                child: Text(
-                                                                  '이모티콘 선택',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                ),
-                                                              )
-                                                            : Image.asset(
-                                                                emoticonWordsData
-                                                                    .emoticon,
-                                                              ),
-                                                      ),
+                                                            child: emoticonWordsData
+                                                                    .emoticon
+                                                                    .isEmpty
+                                                                ? const Center(
+                                                                    child: Text(
+                                                                      '이모티콘 선택',
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                    ),
+                                                                  )
+                                                                : Image.asset(
+                                                                    emoticonWordsData
+                                                                        .emoticon,
+                                                                  ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 50,
+                                                        ),
+                                                        ElevatedButton(
+                                                          onPressed: () {
+                                                            controller
+                                                                .deleteMatchingData(
+                                                                    matchingData,
+                                                                    emoticonWordsData);
+                                                          },
+                                                          child: const Text(
+                                                            '삭제',
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                     const SizedBox(
                                                       width: 30,
@@ -177,10 +222,10 @@ class HomeScreen extends GetView<HomeViewModel> {
                                                                     child:
                                                                         Container(
                                                                       padding:
-                                                                          EdgeInsets.all(
+                                                                          const EdgeInsets.all(
                                                                               8),
                                                                       decoration:
-                                                                          BoxDecoration(
+                                                                          const BoxDecoration(
                                                                               color: Colors.amber),
                                                                       child:
                                                                           Row(
@@ -197,8 +242,11 @@ class HomeScreen extends GetView<HomeViewModel> {
                                                                             ),
                                                                           ),
                                                                           Expanded(
-                                                                            child:
-                                                                                IconButton(onPressed: () {}, icon: Icon(Icons.close)),
+                                                                            child: IconButton(
+                                                                                onPressed: () {
+                                                                                  controller.deleteWord(matchingData, emoticonWordsData, index);
+                                                                                },
+                                                                                icon: const Icon(Icons.close)),
                                                                           )
                                                                         ],
                                                                       ),
@@ -223,7 +271,7 @@ class HomeScreen extends GetView<HomeViewModel> {
                                                   controller.addEmoticonWords(
                                                       matchingData);
                                                 },
-                                                child: Text('이모티콘 추가'),
+                                                child: const Text('이모티콘 추가'),
                                               ),
                                             ),
                                           ),
