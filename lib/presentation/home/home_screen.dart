@@ -50,6 +50,7 @@ class HomeScreen extends GetView<HomeViewModel> {
                                             height: 20,
                                           ),
                                           Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Container(
                                                 width: 80,
@@ -97,12 +98,12 @@ class HomeScreen extends GetView<HomeViewModel> {
                                                 width: 30,
                                               ),
                                               Container(
-                                                width: 500,
-                                                height: 200,
+                                                width: 300,
+                                                height: 120,
                                                 padding:
                                                     const EdgeInsets.all(8),
                                                 decoration: const BoxDecoration(
-                                                  color: Colors.greenAccent,
+                                                  color: Colors.cyanAccent,
                                                 ),
                                                 child: Text(''),
                                               ),
