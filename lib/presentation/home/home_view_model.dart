@@ -1,30 +1,33 @@
+import 'dart:async';
+
+import 'package:beside04_data_manager/domain/model/matching_data.dart';
 import 'package:beside04_data_manager/domain/use_case/get_emoticon_use_case.dart';
-import 'package:beside04_data_manager/domain/use_case/get_wise_saying_use_case.dart';
-import 'package:beside04_data_manager/presentation/home/components/overlay_menu.dart';
+import 'package:beside04_data_manager/domain/use_case/get_matching_list_use_case.dart';
+import 'package:beside04_data_manager/presentation/home/components/emoticon_overlay/emoticon_overlay_menu.dart';
 import 'package:beside04_data_manager/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeViewModel extends GetxController {
   final GetEmoticonUseCase getEmoticonUseCase;
-  final GetWiseSayingUseCase getWiseSayingUseCase;
+  final GetMatchingListUseCase getMatchingListUseCase;
   final BuildContext context;
 
   HomeViewModel({
     required this.getEmoticonUseCase,
-    required this.getWiseSayingUseCase,
+    required this.getMatchingListUseCase,
     required this.context,
   }) {
     fetchData();
   }
 
-  final OverlayMenu _menu = OverlayMenu();
+  final EmoticonOverlayMenu _emoticonMenu = EmoticonOverlayMenu();
 
-  OverlayMenu get menu => _menu;
+  EmoticonOverlayMenu get emoticonMenu => _emoticonMenu;
 
   @override
   void onInit() {
-    _menu.context = context;
+    _emoticonMenu.context = context;
 
     super.onInit();
   }
@@ -38,13 +41,24 @@ class HomeViewModel extends GetxController {
       isLoading: true,
     );
 
-    final wiseSayings = await getWiseSayingUseCase();
+    final matchingList = await getMatchingListUseCase();
 
     final emoticons = await getEmoticonUseCase();
     _state.value = state.value.copyWith(
       emoticons: emoticons,
-      wiseSayings: wiseSayings,
+      matchingList: matchingList,
       isLoading: false,
+    );
+  }
+
+  void setEmoticon(MatchingData data, String emoticon) {
+    final index = state.value.matchingList.indexOf(data);
+    List<MatchingData> newMatchingList = List.from(state.value.matchingList);
+    newMatchingList[index] = data.copyWith(
+      emoticon: emoticon,
+    );
+    _state.value = state.value.copyWith(
+      matchingList: newMatchingList,
     );
   }
 }

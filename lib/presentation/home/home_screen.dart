@@ -13,11 +13,12 @@ class HomeScreen extends GetView<HomeViewModel> {
 
     return GestureDetector(
       onTap: () {
-        if (controller.menu.isActive) {
-          controller.menu.removeMenu();
+        if (controller.emoticonMenu.isActive) {
+          controller.emoticonMenu.removeMenu();
         }
       },
       child: Scaffold(
+        appBar: AppBar(),
         body: Center(
           child: Obx(
             () => state.value.isLoading
@@ -27,107 +28,93 @@ class HomeScreen extends GetView<HomeViewModel> {
                     child: SingleChildScrollView(
                       child: Padding(
                         padding: const EdgeInsets.all(32.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ...state.value.emoticons
-                                .map(
-                                  (e) => Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              e.emoticon,
-                                            ),
-                                            Text(
-                                              e.description.join(', '),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 16.0),
-                                              child: ElevatedButton(
-                                                onPressed: () {},
-                                                child: const Text('저장'),
+                        child: Obx(
+                          () => Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ...state.value.matchingList
+                                  .map(
+                                    (e) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            e.wiseSaying,
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                width: 80,
+                                                height: 80,
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.greenAccent,
+                                                ),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    controller.emoticonMenu
+                                                        .showMenu(
+                                                      state.value.emoticons,
+                                                      (emoticon) {
+                                                        controller.setEmoticon(
+                                                            e, emoticon);
+                                                      },
+                                                    );
+                                                  },
+                                                  child: e.emoticon.isEmpty
+                                                      ? const Center(
+                                                          child: Text(
+                                                            '이모티콘 선택',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        )
+                                                      : Image.asset(
+                                                          e.emoticon,
+                                                        ),
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                controller.menu.showMenu(
-                                                  state.value.wiseSayings,
-                                                );
-                                              },
-                                              child: const Text('명언 선택'),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0),
-                                              child: Container(
-                                                width: 450,
+                                              const SizedBox(
+                                                width: 50,
+                                              ),
+                                              const SizedBox(
+                                                  width: 200,
+                                                  child: TextField()),
+                                              ElevatedButton(
+                                                onPressed: () {},
+                                                child: const Text('단어 추가'),
+                                              ),
+                                              const SizedBox(
+                                                width: 30,
+                                              ),
+                                              Container(
+                                                width: 500,
                                                 height: 200,
                                                 padding:
-                                                    const EdgeInsets.all(12),
+                                                    const EdgeInsets.all(8),
                                                 decoration: const BoxDecoration(
-                                                    color: Colors.amber),
-                                                child: const Text('1'),
+                                                  color: Colors.greenAccent,
+                                                ),
+                                                child: Text(''),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                              width: 200,
-                                              height: 60,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  const Expanded(
-                                                      child: TextField()),
-                                                  ElevatedButton(
-                                                    onPressed: () {},
-                                                    child: const Text('단어 추가'),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 8.0),
-                                              child: Container(
-                                                width: 300,
-                                                height: 140,
-                                                padding:
-                                                    const EdgeInsets.all(12),
-                                                decoration: const BoxDecoration(
-                                                    color: Colors.amber),
-                                                child: const Text('1'),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                )
-                                .toList(),
-                          ],
+                                  )
+                                  .toList(),
+                            ],
+                          ),
                         ),
                       ),
                     ),
