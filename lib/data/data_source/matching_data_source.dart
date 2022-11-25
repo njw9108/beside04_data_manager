@@ -12,11 +12,11 @@ List<MatchingData> _matchList = [
     wiseSaying: '삶이 있는 한 희망은 있다',
     emoticonWordsList: [
       EmoticonWordsData(
-        emoticon: 'assets/mask.png',
+        emoticon: 'assets/svg/depress.svg',
         words: ['삶', '희망'],
       ),
       EmoticonWordsData(
-        emoticon: 'assets/star.png',
+        emoticon: 'assets/svg/depress.svg',
         words: ['재미', '신남'],
       ),
     ],

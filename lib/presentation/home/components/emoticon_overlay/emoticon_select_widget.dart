@@ -1,5 +1,6 @@
 import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmoticonSelectWidget extends StatelessWidget {
   final Function() onClose;
@@ -61,8 +62,10 @@ class EmoticonSelectWidget extends StatelessWidget {
                           },
                           child: Column(
                             children: [
-                              Image.asset(
+                              SvgPicture.asset(
                                 emoticonList[index].emoticon,
+                                width: 80,
+                                height: 80,
                               ),
                               Text(
                                 emoticonList[index].description.join(', '),
