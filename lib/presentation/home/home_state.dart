@@ -1,5 +1,6 @@
 import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:beside04_data_manager/domain/model/matching_data.dart';
+import 'package:beside04_data_manager/domain/model/wise_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -12,6 +13,9 @@ class HomeState with _$HomeState {
   factory HomeState({
     @Default([]) List<MatchingData> matchingList,
     @Default([]) List<EmoticonData> emoticons,
+    @Default([]) List<WiseData> wiseData,
+    @Default(0) int currentPage,
+    @Default(0) int totalPage,
     @Default(false) isLoading,
   }) = _HomeState;
 

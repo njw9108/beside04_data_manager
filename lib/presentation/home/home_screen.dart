@@ -31,19 +31,58 @@ class HomeScreen extends GetView<HomeViewModel> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(onPressed: () {}, child: const Text('이전')),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await controller.setPage(1);
+                    },
+                    child: const Text('첫 페이지'),
+                  ),
                   const SizedBox(
                     width: 40,
                   ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await controller.getPrevPage();
+                      },
+                      child: const Text('이전')),
                   const SizedBox(
+                    width: 40,
+                  ),
+                  SizedBox(
                     width: 100,
-                    child: TextField(),
+                    child: TextField(
+                      controller: controller.curPageController,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  ElevatedButton(onPressed: () {}, child: const Text('이동')),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await controller.setPage(
+                          int.parse(controller.curPageController.text),
+                        );
+                      },
+                      child: const Text('이동')),
                   const SizedBox(
                     width: 40,
                   ),
-                  ElevatedButton(onPressed: () {}, child: const Text('다음')),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await controller.getNextPage();
+                    },
+                    child: const Text('다음'),
+                  ),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await controller.setPage(state.value.totalPage+1);
+                    },
+                    child: const Text('마지막 페이지'),
+                  ),
                 ],
               ),
             ),
@@ -71,14 +110,30 @@ class HomeScreen extends GetView<HomeViewModel> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            matchingData.wiseSaying,
-                                            style: const TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.bold,
-                                              backgroundColor: Colors.amber,
-                                            ),
-                                            textAlign: TextAlign.start,
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  '${state.value.currentPage * 10 + state.value.matchingList.indexOf(matchingData) + 1}. ',
+                                                  style: const TextStyle(
+                                                    fontSize: 22,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                  flex: 9,
+                                                  child: Text(
+                                                    '${matchingData.wiseSaying.message} \n- ${matchingData.wiseSaying.author}',
+                                                    style: const TextStyle(
+                                                      fontSize: 22,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                  )),
+                                            ],
                                           ),
                                           const SizedBox(
                                             height: 20,

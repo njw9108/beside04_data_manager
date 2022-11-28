@@ -2,6 +2,7 @@ import 'package:beside04_data_manager/data/repository/emoticon_repository_impl.d
 import 'package:beside04_data_manager/data/repository/matching_repository_impl.dart';
 import 'package:beside04_data_manager/domain/use_case/get_emoticon_use_case.dart';
 import 'package:beside04_data_manager/domain/use_case/get_matching_list_use_case.dart';
+import 'package:beside04_data_manager/domain/use_case/get_wise_use_case.dart';
 import 'package:beside04_data_manager/presentation/home/home_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -22,5 +23,8 @@ void getHomeBinding(BuildContext context) {
     getEmoticonUseCase: getEmoticonUseCase,
     getMatchingListUseCase: getMatchingListUseCase,
     context: context,
+    getWiseUseCase: GetWiseUseCase(
+      matchingRepository: matchingRepository,
+    ),
   ));
 }
