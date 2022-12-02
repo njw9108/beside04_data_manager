@@ -1,4 +1,5 @@
 import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
+import 'package:beside04_data_manager/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,12 +17,15 @@ class EmoticonSelectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double emoticonSize = Responsive.isMobile(context) ? 50 : 80;
     return SafeArea(
       child: Align(
         alignment: Alignment.center,
         child: Material(
           child: Container(
-            width: 400,
+            width: Responsive.isMobile(context)
+                ? MediaQuery.of(context).size.width * 0.6
+                : 400,
             height: 600,
             decoration: const BoxDecoration(
               color: Colors.greenAccent,
@@ -45,11 +49,13 @@ class EmoticonSelectWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   child: GridView.builder(
                     itemCount: emoticonList.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, //1 개의 행에 보여줄 item 개수
-                      childAspectRatio: 1, //가로 세로 비율
-                      mainAxisSpacing: 10, //수평 Padding
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: Responsive.isMobile(context) ? 2 : 3,
+                      //1 개의 행에 보여줄 item 개수
+                      childAspectRatio: 1,
+                      //가로 세로 비율
+                      mainAxisSpacing: 10,
+                      //수평 Padding
                       crossAxisSpacing: 10, //수직 Padding
                     ),
                     itemBuilder: (context, index) {
@@ -64,8 +70,8 @@ class EmoticonSelectWidget extends StatelessWidget {
                             children: [
                               SvgPicture.asset(
                                 emoticonList[index].emoticon,
-                                width: 80,
-                                height: 80,
+                                width: emoticonSize,
+                                height: emoticonSize,
                               ),
                               Text(
                                 emoticonList[index].description.join(', '),
