@@ -25,7 +25,7 @@ class HomeScreen extends GetView<HomeViewModel> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.limeAccent,
-          toolbarHeight: 75,
+          toolbarHeight: 100,
           flexibleSpace: const Padding(
             padding: EdgeInsets.all(8),
             child: Center(

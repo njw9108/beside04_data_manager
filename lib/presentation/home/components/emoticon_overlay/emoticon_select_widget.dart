@@ -21,7 +21,7 @@ class EmoticonSelectWidget extends StatelessWidget {
         alignment: Alignment.center,
         child: Material(
           child: Container(
-            width: 660,
+            width: 400,
             height: 600,
             decoration: const BoxDecoration(
               color: Colors.greenAccent,
