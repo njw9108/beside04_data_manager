@@ -2,7 +2,6 @@ import 'package:beside04_data_manager/core/result.dart';
 import 'package:beside04_data_manager/domain/model/wise_api_result.dart';
 import 'package:beside04_data_manager/domain/model/wise_data.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GetWiseDataSource {
   final String _baseUrl = 'https://harukitty.com/api';

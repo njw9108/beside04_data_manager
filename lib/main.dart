@@ -1,7 +1,6 @@
 import 'package:beside04_data_manager/presentation/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   // await dotenv.load(

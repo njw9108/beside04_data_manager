@@ -1,5 +1,4 @@
 import 'package:beside04_data_manager/domain/model/wise_data.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'wise_api_result.freezed.dart';
 part 'wise_api_result.g.dart';
