@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class GetWiseDataSource {
-  final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+  final String _baseUrl = 'https://harukitty.com/api';
   final Dio _client = Dio();
 
   Future<Result<WiseApiResult>> getWiseSaying(int limit, int page) async {
