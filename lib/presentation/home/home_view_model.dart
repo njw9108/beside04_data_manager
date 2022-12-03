@@ -27,7 +27,8 @@ class HomeViewModel extends GetxController {
     required this.context,
     required this.getWiseUseCase,
   }) {
-    fetchData();
+    getEmoticons();
+    getWise(0);
   }
 
   final EmoticonOverlayMenu _emoticonMenu = EmoticonOverlayMenu();
@@ -56,23 +57,28 @@ class HomeViewModel extends GetxController {
 
   Rx<HomeState> get state => _state;
 
-  Future<void> fetchData() async {
-    //final matchingList = await getMatchingListUseCase();
-    final emoticons = await getEmoticonUseCase();
-    _state.value = state.value.copyWith(
-      emoticons: emoticons,
+  Future<void> getEmoticons() async {
+    int limit = 100;
+    int page = 0;
+    final emoticons = await getEmoticonUseCase(limit, page);
+    emoticons.when(
+      success: (emoticonList) {
+        _state.value = state.value.copyWith(
+          emoticons: emoticonList,
+        );
+      },
+      error: (message) {
+        print(message);
+      },
     );
-
-    await getWise(0);
   }
 
   Future<void> setPage(int page) async {
-    if (page-1 < 0 || page-1 > state.value.totalPage) {
+    if (page - 1 < 0 || page - 1 > state.value.totalPage) {
       return;
     }
 
-    await getWise(page-1);
-
+    await getWise(page - 1);
   }
 
   Future<void> getNextPage() async {

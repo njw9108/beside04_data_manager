@@ -68,13 +68,13 @@ class EmoticonSelectWidget extends StatelessWidget {
                           },
                           child: Column(
                             children: [
-                              SvgPicture.asset(
+                              SvgPicture.network(
                                 emoticonList[index].emoticon,
                                 width: emoticonSize,
                                 height: emoticonSize,
                               ),
                               Text(
-                                emoticonList[index].description.join(', '),
+                                emoticonList[index].desc,
                               ),
                             ],
                           ),

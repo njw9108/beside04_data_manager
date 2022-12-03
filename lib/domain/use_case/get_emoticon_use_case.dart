@@ -1,3 +1,4 @@
+import 'package:beside04_data_manager/core/result.dart';
 import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:beside04_data_manager/domain/repository/emoticon_repository.dart';
 
@@ -8,7 +9,7 @@ class GetEmoticonUseCase {
     required this.emoticonRepository,
   });
 
-  Future<List<EmoticonData>> call() async {
-    return await emoticonRepository.getEmoticon();
+  Future<Result<List<EmoticonData>>> call(int limit, int page) async {
+    return await emoticonRepository.getEmoticon(limit, page);
   }
 }
