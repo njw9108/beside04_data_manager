@@ -1,6 +1,5 @@
 import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:beside04_data_manager/domain/model/matching_data.dart';
-import 'package:beside04_data_manager/domain/model/wise_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_state.freezed.dart';

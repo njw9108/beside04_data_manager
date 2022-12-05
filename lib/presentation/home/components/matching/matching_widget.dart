@@ -16,56 +16,66 @@ class MatchingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<HomeViewModel>();
     final state = controller.state;
+    final matchingIndex = state.value.matchingList.indexOf(matchingData);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                '${state.value.currentPage * 10 + state.value.matchingList.indexOf(matchingData) + 1}. ',
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Expanded(
-                flex: 9,
+    return Obx(() {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
                 child: Text(
-                  '${matchingData.wiseSaying.message} \n- ${matchingData.wiseSaying.author}',
+                  '${state.value.currentPage * 10 + state.value.matchingList.indexOf(matchingData) + 1}. ',
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
-                )),
-          ],
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        ...matchingData.emoticonWordsList.map(
-          (emoticonWordsData) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: EmoticonWordsWidget(
-                matchingData: matchingData,
-                emoticonWordsData: emoticonWordsData,
+                ),
               ),
-            );
-          },
-        ).toList(),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Container(
-            height: 1,
-            color: Colors.black,
+              Expanded(
+                  flex: 9,
+                  child: Text(
+                    '${matchingData.wiseSaying.message} \n- ${matchingData.wiseSaying.author}',
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  )),
+            ],
           ),
-        )
-      ],
-    );
+          const SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              openList[matchingIndex] = !openList[matchingIndex];
+            },
+            child: const Text('펼치기'),
+          ),
+          if (openList[matchingIndex])
+            ...matchingData.emoticonWordsList.map(
+              (emoticonWordsData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: EmoticonWordsWidget(
+                    matchingData: matchingData,
+                    emoticonWordsData: emoticonWordsData,
+                  ),
+                );
+              },
+            ).toList(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Container(
+              height: 1,
+              color: Colors.black,
+            ),
+          )
+        ],
+      );
+    });
   }
 }

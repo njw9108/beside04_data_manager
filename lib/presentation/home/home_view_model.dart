@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 const int limit = 10;
+List<bool> openList = List.generate(limit, (index) => false).obs;
 
 class HomeViewModel extends GetxController {
   final GetEmoticonUseCase getEmoticonUseCase;
@@ -132,25 +133,6 @@ class HomeViewModel extends GetxController {
     );
   }
 
-  // void addEmoticonWords(MatchingData matchingData) {
-  //   final index = state.value.matchingList.indexOf(matchingData);
-  //   List<MatchingData> newMatchingDataList =
-  //       List.from(state.value.matchingList);
-  //
-  //   List<EmoticonWordsData> newEmoticonWordsList =
-  //       List.from(newMatchingDataList[index].emoticonWordsList);
-  //
-  //   newEmoticonWordsList.add(EmoticonWordsData());
-  //
-  //   newMatchingDataList[index] = newMatchingDataList[index].copyWith(
-  //     emoticonWordsList: newEmoticonWordsList,
-  //   );
-  //
-  //   _state.value = state.value.copyWith(
-  //     matchingList: newMatchingDataList,
-  //   );
-  // }
-
   void setEmoticon(MatchingData matchingData,
       EmoticonWordsData emoticonWordsData, EmoticonData emoticon) {
     final matchingIndex = state.value.matchingList.indexOf(matchingData);
@@ -247,4 +229,6 @@ class HomeViewModel extends GetxController {
   }) async {
     await updateWordsUseCase(emoticonId, wiseId, words);
   }
+
+  void updateOpenClose() {}
 }
