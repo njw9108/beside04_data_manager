@@ -21,9 +21,17 @@ class EmoticonWordsWidget extends StatelessWidget {
         ? Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              EmoticonSelectWidget(
-                matchingData: matchingData,
-                emoticonWordsData: emoticonWordsData,
+              Column(
+                children: [
+                  EmoticonSelectWidget(
+                    matchingData: matchingData,
+                    emoticonWordsData: emoticonWordsData,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(emoticonWordsData.emoticon.desc),
+                ],
               ),
               const SizedBox(
                 width: 30,
@@ -36,9 +44,17 @@ class EmoticonWordsWidget extends StatelessWidget {
         : Center(
             child: Column(
               children: [
-                EmoticonSelectWidget(
-                  matchingData: matchingData,
-                  emoticonWordsData: emoticonWordsData,
+                Column(
+                  children: [
+                    EmoticonSelectWidget(
+                      matchingData: matchingData,
+                      emoticonWordsData: emoticonWordsData,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(emoticonWordsData.emoticon.desc),
+                  ],
                 ),
                 const SizedBox(
                   height: 30,

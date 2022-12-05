@@ -2,7 +2,6 @@ import 'package:beside04_data_manager/domain/model/emoticon_words_data.dart';
 import 'package:beside04_data_manager/domain/model/matching_data.dart';
 import 'package:beside04_data_manager/presentation/home/home_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class EmoticonSelectWidget extends StatelessWidget {
@@ -32,20 +31,19 @@ class EmoticonSelectWidget extends StatelessWidget {
           controller.emoticonMenu.showMenu(
             state.value.emoticons,
             (emoticon) {
-              controller.setEmoticon(
-                  matchingData, emoticonWordsData, emoticon);
+              controller.setEmoticon(matchingData, emoticonWordsData, emoticon);
             },
           );
         },
-        child: emoticonWordsData.emoticon.isEmpty
+        child: emoticonWordsData.emoticon.emoticon.isEmpty
             ? const Center(
                 child: Text(
                   '이모티콘 선택',
                   textAlign: TextAlign.center,
                 ),
               )
-            : SvgPicture.asset(
-                emoticonWordsData.emoticon,
+            : Image.network(
+                emoticonWordsData.emoticon.emoticon,
               ),
       ),
     );

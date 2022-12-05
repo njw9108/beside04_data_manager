@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class EmoticonOverlayMenu {
   late BuildContext context;
   late List<EmoticonData> emoticonList;
-  late Function(String) onEmoticonSelect;
+  late Function(EmoticonData) onEmoticonSelect;
 
   EmoticonOverlayMenu();
 
@@ -21,7 +21,7 @@ class EmoticonOverlayMenu {
   bool isActive = false;
 
   void showMenu(
-      List<EmoticonData> emoticonList, Function(String) onEmoticonSelect) async {
+      List<EmoticonData> emoticonList, Function(EmoticonData) onEmoticonSelect) async {
     if (isActive == false) {
       this.emoticonList = emoticonList;
       this.onEmoticonSelect = onEmoticonSelect;

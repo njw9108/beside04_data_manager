@@ -1,5 +1,4 @@
 import 'package:beside04_data_manager/core/result.dart';
-import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:dio/dio.dart';
 
 class WordsDataSource {
@@ -16,7 +15,7 @@ class WordsDataSource {
       );
 
       if (response.data['status'] == 200) {
-        final Iterable wordList = response.data['data']['data'];
+        final Iterable wordList = response.data['data'];
         final List<String> words =
             wordList.map((e) => e['word'].toString()).toList();
 
@@ -27,6 +26,29 @@ class WordsDataSource {
       }
     } catch (e) {
       return Result.error(e.toString());
+    }
+  }
+
+  Future<bool> updateWords(
+      int emoticonId, int wiseId, List<String> words) async {
+    try {
+      String emoticonUrl =
+          '$_baseUrl/v1/emotions/$emoticonId/wisesaying/$wiseId/words';
+      Response response;
+      response = await _client.post(
+        emoticonUrl,
+        data: {
+          "words": words,
+        },
+      );
+
+      if (response.data['status'] == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 }

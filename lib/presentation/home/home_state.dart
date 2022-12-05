@@ -12,7 +12,6 @@ class HomeState with _$HomeState {
   factory HomeState({
     @Default([]) List<MatchingData> matchingList,
     @Default([]) List<EmoticonData> emoticons,
-    @Default([]) List<WiseData> wiseData,
     @Default(0) int currentPage,
     @Default(0) int totalPage,
     @Default(false) isLoading,

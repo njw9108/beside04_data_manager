@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:beside04_data_manager/domain/model/emoticon_words_data.dart';
 import 'package:beside04_data_manager/domain/model/matching_data.dart';
-import 'package:beside04_data_manager/domain/model/wise_data.dart';
 import 'package:beside04_data_manager/domain/use_case/get_emoticon_use_case.dart';
 import 'package:beside04_data_manager/domain/use_case/get_matching_list_use_case.dart';
-import 'package:beside04_data_manager/domain/use_case/get_wise_use_case.dart';
+import 'package:beside04_data_manager/domain/use_case/update_words_use_case.dart';
 import 'package:beside04_data_manager/presentation/home/components/emoticon_overlay/emoticon_overlay_menu.dart';
 import 'package:beside04_data_manager/presentation/home/components/word_adding/word_adding_overlay_menu.dart';
 import 'package:beside04_data_manager/presentation/home/home_state.dart';
@@ -17,15 +17,15 @@ const int limit = 10;
 class HomeViewModel extends GetxController {
   final GetEmoticonUseCase getEmoticonUseCase;
   final GetMatchingListUseCase getMatchingListUseCase;
+  final UpdateWordsUseCase updateWordsUseCase;
   final BuildContext context;
-  final GetWiseUseCase getWiseUseCase;
   final TextEditingController curPageController = TextEditingController();
 
   HomeViewModel({
     required this.getEmoticonUseCase,
     required this.getMatchingListUseCase,
+    required this.updateWordsUseCase,
     required this.context,
-    required this.getWiseUseCase,
   }) {
     fetchData();
   }
@@ -97,62 +97,62 @@ class HomeViewModel extends GetxController {
         );
       },
       error: (message) {
-        print(message);
+        Get.snackbar('에러', message);
       },
     );
   }
 
   Future<void> getWise(int page) async {
+    int curPage = 0;
+    int totalPage = 0;
+    List<MatchingData> matchingList = [];
+
     _state.value = state.value.copyWith(
       isLoading: true,
     );
-    final getWise = await getWiseUseCase(limit, page);
-    int curPage = 0;
-    int totalPage = 0;
-    List<WiseData> wiseData = [];
-    List<MatchingData> matchingList = [];
+    final result = await getMatchingListUseCase(
+      limit: limit,
+      page: page,
+      emoticons: state.value.emoticons,
+    );
 
-    getWise.when(success: (wise) {
-      curPage = wise.currentPage;
-      totalPage = wise.totalPage;
-      wiseData = wise.wiseData;
-
-      curPageController.text = '${curPage + 1}';
-      matchingList = wiseData.map((e) => MatchingData(wiseSaying: e,)).toList();
+    result.when(success: (data) {
+      curPage = data['curPage'];
+      totalPage = data['totalPage'];
+      matchingList = data['matchingDataList'];
     }, error: (message) {
       Get.snackbar('에러', message);
     });
 
     _state.value = state.value.copyWith(
       matchingList: matchingList,
-      wiseData: wiseData,
       currentPage: curPage,
       totalPage: totalPage,
       isLoading: false,
     );
   }
 
-  void addEmoticonWords(MatchingData matchingData) {
-    final index = state.value.matchingList.indexOf(matchingData);
-    List<MatchingData> newMatchingDataList =
-        List.from(state.value.matchingList);
-
-    List<EmoticonWordsData> newEmoticonWordsList =
-        List.from(newMatchingDataList[index].emoticonWordsList);
-
-    newEmoticonWordsList.add(EmoticonWordsData());
-
-    newMatchingDataList[index] = newMatchingDataList[index].copyWith(
-      emoticonWordsList: newEmoticonWordsList,
-    );
-
-    _state.value = state.value.copyWith(
-      matchingList: newMatchingDataList,
-    );
-  }
+  // void addEmoticonWords(MatchingData matchingData) {
+  //   final index = state.value.matchingList.indexOf(matchingData);
+  //   List<MatchingData> newMatchingDataList =
+  //       List.from(state.value.matchingList);
+  //
+  //   List<EmoticonWordsData> newEmoticonWordsList =
+  //       List.from(newMatchingDataList[index].emoticonWordsList);
+  //
+  //   newEmoticonWordsList.add(EmoticonWordsData());
+  //
+  //   newMatchingDataList[index] = newMatchingDataList[index].copyWith(
+  //     emoticonWordsList: newEmoticonWordsList,
+  //   );
+  //
+  //   _state.value = state.value.copyWith(
+  //     matchingList: newMatchingDataList,
+  //   );
+  // }
 
   void setEmoticon(MatchingData matchingData,
-      EmoticonWordsData emoticonWordsData, String emoticon) {
+      EmoticonWordsData emoticonWordsData, EmoticonData emoticon) {
     final matchingIndex = state.value.matchingList.indexOf(matchingData);
     List<MatchingData> newMatchingList = List.from(state.value.matchingList);
 
@@ -190,7 +190,13 @@ class HomeViewModel extends GetxController {
     newWords.addAll(words);
 
     newEmoticonWordsList[emoticonWordsIndex] =
-        emoticonWordsData.copyWith(words: newWords);
+        emoticonWordsData.copyWith(words: newWords.toSet().toList());
+
+    updateWords(
+      emoticonId: newEmoticonWordsList[emoticonWordsIndex].emoticon.id!,
+      wiseId: matchingData.wiseSaying.id!,
+      words: newWords,
+    );
 
     newMatchingList[matchingIndex] = matchingData.copyWith(
       emoticonWordsList: newEmoticonWordsList,
@@ -220,11 +226,25 @@ class HomeViewModel extends GetxController {
     newEmoticonWordsList[emoticonWordsIndex] =
         emoticonWordsData.copyWith(words: newWords);
 
+    updateWords(
+      emoticonId: newEmoticonWordsList[emoticonWordsIndex].emoticon.id!,
+      wiseId: matchingData.wiseSaying.id!,
+      words: newWords,
+    );
+
     newMatchingList[matchingIndex] = matchingData.copyWith(
       emoticonWordsList: newEmoticonWordsList,
     );
     _state.value = state.value.copyWith(
       matchingList: newMatchingList,
     );
+  }
+
+  Future<void> updateWords({
+    required int emoticonId,
+    required int wiseId,
+    required List<String> words,
+  }) async {
+    await updateWordsUseCase(emoticonId, wiseId, words);
   }
 }

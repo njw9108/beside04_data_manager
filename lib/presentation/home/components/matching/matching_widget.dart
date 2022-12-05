@@ -59,18 +59,6 @@ class MatchingWidget extends StatelessWidget {
           },
         ).toList(),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: () {
-                controller.addEmoticonWords(matchingData);
-              },
-              child: const Text('이모티콘 추가'),
-            ),
-          ),
-        ),
-        Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Container(
             height: 1,

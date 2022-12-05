@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class EmoticonSelectWidget extends StatelessWidget {
   final Function() onClose;
-  final Function(String) onEmoticonSelect;
+  final Function(EmoticonData) onEmoticonSelect;
   final List<EmoticonData> emoticonList;
 
   const EmoticonSelectWidget({
@@ -63,12 +63,12 @@ class EmoticonSelectWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {
-                            onEmoticonSelect(emoticonList[index].emoticon);
+                            onEmoticonSelect(emoticonList[index]);
                             onClose();
                           },
                           child: Column(
                             children: [
-                              SvgPicture.network(
+                              Image.network(
                                 emoticonList[index].emoticon,
                                 width: emoticonSize,
                                 height: emoticonSize,
