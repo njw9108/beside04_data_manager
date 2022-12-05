@@ -27,8 +27,7 @@ class HomeViewModel extends GetxController {
     required this.context,
     required this.getWiseUseCase,
   }) {
-    getEmoticons();
-    getWise(0);
+    fetchData();
   }
 
   final EmoticonOverlayMenu _emoticonMenu = EmoticonOverlayMenu();
@@ -57,22 +56,6 @@ class HomeViewModel extends GetxController {
 
   Rx<HomeState> get state => _state;
 
-  Future<void> getEmoticons() async {
-    int limit = 100;
-    int page = 0;
-    final emoticons = await getEmoticonUseCase(limit, page);
-    emoticons.when(
-      success: (emoticonList) {
-        _state.value = state.value.copyWith(
-          emoticons: emoticonList,
-        );
-      },
-      error: (message) {
-        print(message);
-      },
-    );
-  }
-
   Future<void> setPage(int page) async {
     if (page - 1 < 0 || page - 1 > state.value.totalPage) {
       return;
@@ -97,6 +80,28 @@ class HomeViewModel extends GetxController {
     await getWise(state.value.currentPage - 1);
   }
 
+  Future<void> fetchData() async {
+    await getEmoticons();
+
+    await getWise(0);
+  }
+
+  Future<void> getEmoticons() async {
+    int limit = 100;
+    int page = 0;
+    final emoticons = await getEmoticonUseCase(limit, page);
+    emoticons.when(
+      success: (emoticonList) {
+        _state.value = state.value.copyWith(
+          emoticons: emoticonList,
+        );
+      },
+      error: (message) {
+        print(message);
+      },
+    );
+  }
+
   Future<void> getWise(int page) async {
     _state.value = state.value.copyWith(
       isLoading: true,
@@ -113,7 +118,7 @@ class HomeViewModel extends GetxController {
       wiseData = wise.wiseData;
 
       curPageController.text = '${curPage + 1}';
-      matchingList = wiseData.map((e) => MatchingData(wiseSaying: e)).toList();
+      matchingList = wiseData.map((e) => MatchingData(wiseSaying: e,)).toList();
     }, error: (message) {
       Get.snackbar('에러', message);
     });
@@ -218,25 +223,6 @@ class HomeViewModel extends GetxController {
     newMatchingList[matchingIndex] = matchingData.copyWith(
       emoticonWordsList: newEmoticonWordsList,
     );
-    _state.value = state.value.copyWith(
-      matchingList: newMatchingList,
-    );
-  }
-
-  void deleteMatchingData(
-      MatchingData matchingData, EmoticonWordsData emoticonWords) {
-    final int matchingIndex = state.value.matchingList.indexOf(matchingData);
-    List<MatchingData> newMatchingList = List.from(state.value.matchingList);
-
-    List<EmoticonWordsData> newEmoticonWordsList =
-        List.from(newMatchingList[matchingIndex].emoticonWordsList);
-
-    newEmoticonWordsList.remove(emoticonWords);
-
-    newMatchingList[matchingIndex] = newMatchingList[matchingIndex].copyWith(
-      emoticonWordsList: newEmoticonWordsList,
-    );
-
     _state.value = state.value.copyWith(
       matchingList: newMatchingList,
     );

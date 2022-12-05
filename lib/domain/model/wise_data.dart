@@ -7,6 +7,7 @@ part 'wise_data.g.dart';
 @freezed
 class WiseData with _$WiseData {
   factory WiseData({
+    int? id,
     @Default('') String author,
     @Default('') String message,
   }) = _WiseData;

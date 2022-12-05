@@ -20,49 +20,34 @@ class EmoticonSelectWidget extends StatelessWidget {
     final controller = Get.find<HomeViewModel>();
     final state = controller.state;
 
-    return Column(
-      children: [
-        Container(
-          width: 80,
-          height: 80,
-          padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
-            color: Colors.greenAccent,
-          ),
-          child: InkWell(
-            onTap: () {
-              controller.emoticonMenu.showMenu(
-                state.value.emoticons,
-                (emoticon) {
-                  controller.setEmoticon(
-                      matchingData, emoticonWordsData, emoticon);
-                },
-              );
+    return Container(
+      width: 80,
+      height: 80,
+      padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
+        color: Colors.greenAccent,
+      ),
+      child: InkWell(
+        onTap: () {
+          controller.emoticonMenu.showMenu(
+            state.value.emoticons,
+            (emoticon) {
+              controller.setEmoticon(
+                  matchingData, emoticonWordsData, emoticon);
             },
-            child: emoticonWordsData.emoticon.isEmpty
-                ? const Center(
-                    child: Text(
-                      '이모티콘 선택',
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                : SvgPicture.asset(
-                    emoticonWordsData.emoticon,
-                  ),
-          ),
-        ),
-        const SizedBox(
-          height: 50,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            controller.deleteMatchingData(matchingData, emoticonWordsData);
-          },
-          child: const Text(
-            '삭제',
-          ),
-        ),
-      ],
+          );
+        },
+        child: emoticonWordsData.emoticon.isEmpty
+            ? const Center(
+                child: Text(
+                  '이모티콘 선택',
+                  textAlign: TextAlign.center,
+                ),
+              )
+            : SvgPicture.asset(
+                emoticonWordsData.emoticon,
+              ),
+      ),
     );
   }
 }
