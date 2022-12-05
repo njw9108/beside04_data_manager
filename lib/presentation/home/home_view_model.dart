@@ -62,7 +62,7 @@ class HomeViewModel extends GetxController {
       return;
     }
 
-    await getWise(page - 1);
+    await getMatchingData(page - 1);
   }
 
   Future<void> getNextPage() async {
@@ -70,7 +70,7 @@ class HomeViewModel extends GetxController {
       return;
     }
 
-    await getWise(state.value.currentPage + 1);
+    await getMatchingData(state.value.currentPage + 1);
   }
 
   Future<void> getPrevPage() async {
@@ -78,13 +78,13 @@ class HomeViewModel extends GetxController {
       return;
     }
 
-    await getWise(state.value.currentPage - 1);
+    await getMatchingData(state.value.currentPage - 1);
   }
 
   Future<void> fetchData() async {
     await getEmoticons();
 
-    await getWise(0);
+    await getMatchingData(0);
   }
 
   Future<void> getEmoticons() async {
@@ -103,7 +103,7 @@ class HomeViewModel extends GetxController {
     );
   }
 
-  Future<void> getWise(int page) async {
+  Future<void> getMatchingData(int page) async {
     int curPage = 0;
     int totalPage = 0;
     List<MatchingData> matchingList = [];
@@ -131,6 +131,7 @@ class HomeViewModel extends GetxController {
       totalPage: totalPage,
       isLoading: false,
     );
+    openList.setRange(0, limit - 1, List.generate(limit, (index) => false));
   }
 
   void setEmoticon(MatchingData matchingData,
