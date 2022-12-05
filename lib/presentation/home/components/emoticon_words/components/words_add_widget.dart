@@ -20,7 +20,7 @@ class WordsAddWidget extends StatelessWidget {
     final controller = Get.find<HomeViewModel>();
 
     return Container(
-      width: 500,
+      width: 300,
       height: 220,
       padding: const EdgeInsets.all(8),
       decoration: const BoxDecoration(
@@ -43,10 +43,10 @@ class WordsAddWidget extends StatelessWidget {
             GridView.builder(
                 shrinkWrap: true,
                 itemCount: emoticonWordsData.words.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
                   //1 개의 행에 보여줄 item 개수
-                  childAspectRatio: Responsive.isMobile(context) ? 1 : 2 / 1,
+                  childAspectRatio: 2,
                   //가로 세로 비율
                   mainAxisSpacing: 10,
                   //수평 Padding

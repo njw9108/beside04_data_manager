@@ -28,12 +28,12 @@ class EmoticonSelectWidget extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          controller.emoticonMenu.showMenu(
-            state.value.emoticons,
-            (emoticon) {
-              controller.setEmoticon(matchingData, emoticonWordsData, emoticon);
-            },
-          );
+          // controller.emoticonMenu.showMenu(
+          //   state.value.emoticons,
+          //   (emoticon) {
+          //     controller.setEmoticon(matchingData, emoticonWordsData, emoticon);
+          //   },
+          // );
         },
         child: emoticonWordsData.emoticon.emoticon.isEmpty
             ? const Center(

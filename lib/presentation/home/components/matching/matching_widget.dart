@@ -1,6 +1,7 @@
 import 'package:beside04_data_manager/domain/model/matching_data.dart';
 import 'package:beside04_data_manager/presentation/home/components/emoticon_words/emoticon_words_widget.dart';
 import 'package:beside04_data_manager/presentation/home/home_view_model.dart';
+import 'package:beside04_data_manager/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,17 +57,32 @@ class MatchingWidget extends StatelessWidget {
             child: const Text('펼치기'),
           ),
           if (openList[matchingIndex])
-            ...matchingData.emoticonWordsList.map(
-              (emoticonWordsData) {
+            GridView.builder(
+              shrinkWrap: true,
+              itemCount: matchingData.emoticonWordsList.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: Responsive.isDesktop(context) ? 2 : 1,
+                //1 개의 행에 보여줄 item 개수
+                childAspectRatio: Responsive.isDesktop(context)
+                    ? 2
+                    : Responsive.isTablet(context)
+                        ? 1
+                        : 0.7,
+                //가로 세로 비율
+                mainAxisSpacing: 10,
+                //수평 Padding
+                crossAxisSpacing: 10, //수직 Padding
+              ),
+              itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: EmoticonWordsWidget(
                     matchingData: matchingData,
-                    emoticonWordsData: emoticonWordsData,
+                    emoticonWordsData: matchingData.emoticonWordsList[index],
                   ),
                 );
               },
-            ).toList(),
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Container(
