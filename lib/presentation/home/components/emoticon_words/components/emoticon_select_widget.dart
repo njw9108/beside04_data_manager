@@ -18,6 +18,7 @@ class EmoticonSelectWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<HomeViewModel>();
     final state = controller.state;
+    print(emoticonWordsData.emoticon.emoticon);
 
     return Container(
       width: 80,
@@ -45,6 +46,7 @@ class EmoticonSelectWidget extends StatelessWidget {
             : Image.network(
                 emoticonWordsData.emoticon.emoticon,
               ),
+
       ),
     );
   }

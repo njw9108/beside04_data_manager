@@ -3,7 +3,7 @@ import 'package:beside04_data_manager/domain/model/emoticon_data.dart';
 import 'package:dio/dio.dart';
 
 class EmoticonDataSource {
-  final String _baseUrl = 'https://harukitty.com/api';
+  final String _baseUrl = 'https://harunyang.com/api';
   final Dio _client = Dio();
 
   Future<Result<List<EmoticonData>>> getEmoticons(int limit, int page) async {

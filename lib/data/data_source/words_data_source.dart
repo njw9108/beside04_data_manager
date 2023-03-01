@@ -2,7 +2,7 @@ import 'package:beside04_data_manager/core/result.dart';
 import 'package:dio/dio.dart';
 
 class WordsDataSource {
-  final String _baseUrl = 'https://harukitty.com/api';
+  final String _baseUrl = 'https://harunyang.com/api';
   final Dio _client = Dio();
 
   Future<Result<List<String>>> getWords(int emoticonId, int wiseId) async {

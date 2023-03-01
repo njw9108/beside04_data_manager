@@ -4,12 +4,12 @@ import 'package:beside04_data_manager/domain/model/wise_data.dart';
 import 'package:dio/dio.dart';
 
 class GetWiseDataSource {
-  final String _baseUrl = 'https://harukitty.com/api';
+  final String _baseUrl = 'https://harunyang.com/api';
   final Dio _client = Dio();
 
   Future<Result<WiseApiResult>> getWiseSaying(int limit, int page) async {
     try {
-      String wiseUrl = '$_baseUrl/v1/wisesaying';
+      String wiseUrl = '$_baseUrl/v1/wisesayings';
       Response response;
       response = await _client.get(
         wiseUrl,
